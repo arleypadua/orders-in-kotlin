@@ -3,6 +3,7 @@ package com.ordersinkotlin.ordersinkotlin.domain
 import com.ordersinkotlin.ordersinkotlin.seedwork.DomainEvent
 import com.ordersinkotlin.ordersinkotlin.seedwork.Entity
 import org.springframework.data.annotation.Id
+import org.springframework.data.annotation.Version
 import org.springframework.data.repository.PagingAndSortingRepository
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -37,6 +38,9 @@ class Order private constructor() : Entity() {
         private set
 
     private var itemsCollection = mutableListOf<OrderItem>()
+
+    @Version
+    private var version: Long = 0
 
     var items
         get() = itemsCollection.toList()
