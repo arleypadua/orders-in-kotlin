@@ -49,10 +49,18 @@ class Order private constructor() : Entity() {
         }
 
     fun add(item: OrderItem) {
+        require(status == OrderStatus.Draft) {
+            "Can only add items to orders in Draft. Current status is $status"
+        }
+
         itemsCollection.add(item)
     }
 
     fun add(itemsToAdd: Iterable<OrderItem>) {
+        require(status == OrderStatus.Draft) {
+            "Can only add items to orders in Draft. Current status is $status"
+        }
+
         itemsCollection.addAll(itemsToAdd)
     }
 
@@ -122,9 +130,9 @@ class Order private constructor() : Entity() {
 }
 
 class OrderItem(
-    private val product: Product,
-    private val unitPrice: Double,
-    private val quantity: Int
+    val product: Product,
+    val unitPrice: Double,
+    val quantity: Int
 ) {
     init {
         require(unitPrice > 0) {
