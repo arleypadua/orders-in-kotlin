@@ -1,4 +1,4 @@
-package com.ordersinkotlin.ordersinkotlin.features
+package com.ordersinkotlin.ordersinkotlin.features.order
 
 import com.ordersinkotlin.ordersinkotlin.domain.Order
 import com.ordersinkotlin.ordersinkotlin.domain.OrderFixture
@@ -10,7 +10,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import java.util.*
 
 @SpringBootTest
 class PlaceOrderTests {

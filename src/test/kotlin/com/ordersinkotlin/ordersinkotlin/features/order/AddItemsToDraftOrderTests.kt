@@ -1,8 +1,7 @@
-package com.ordersinkotlin.ordersinkotlin.features
+package com.ordersinkotlin.ordersinkotlin.features.order
 
 import com.ordersinkotlin.ordersinkotlin.domain.Order
 import com.ordersinkotlin.ordersinkotlin.domain.OrderFixture
-import com.ordersinkotlin.ordersinkotlin.domain.OrderStatus
 import com.ordersinkotlin.ordersinkotlin.domain.OrdersRepository
 import com.ordersinkotlin.ordersinkotlin.features.data.OrderProduct
 import com.ordersinkotlin.ordersinkotlin.seedwork.CommandHandler

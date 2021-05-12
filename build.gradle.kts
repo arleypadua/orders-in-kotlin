@@ -26,6 +26,9 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
+
+	// ideally this would be a test implementation,
+	// but for testing purposes, I'm making this in memory mongo as part of the app
 	implementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
 }
 

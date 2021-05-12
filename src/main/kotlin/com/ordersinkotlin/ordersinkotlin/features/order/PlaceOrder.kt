@@ -1,4 +1,4 @@
-package com.ordersinkotlin.ordersinkotlin.features
+package com.ordersinkotlin.ordersinkotlin.features.order
 
 import com.ordersinkotlin.ordersinkotlin.domain.OrdersRepository
 import com.ordersinkotlin.ordersinkotlin.seedwork.CommandHandler
