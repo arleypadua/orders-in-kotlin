@@ -11,7 +11,7 @@ abstract class Entity {
         domainEvents.add(domainEvent)
     }
 
-    internal fun getAndClearDomainEvents(): List<DomainEvent> {
+    internal fun clearAndGetDomainEvents(): List<DomainEvent> {
         val domainEvents = domainEvents.toList()
         this.domainEvents.clear()
         return domainEvents

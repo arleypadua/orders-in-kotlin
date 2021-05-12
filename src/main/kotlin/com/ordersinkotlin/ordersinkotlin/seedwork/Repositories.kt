@@ -30,7 +30,7 @@ class SpringUnitOfWork(
         crudRepositoryType: Class<*>,
         entity: TEntity
     ) {
-        val domainEvents = entity.getAndClearDomainEvents()
+        val domainEvents = entity.clearAndGetDomainEvents()
         eventPublisher.publishAll(domainEvents)
 
         when (val repository = context.getBean(crudRepositoryType)) {

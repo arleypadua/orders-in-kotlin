@@ -14,37 +14,20 @@ import org.springframework.web.reactive.function.server.awaitBody
 import org.springframework.web.reactive.function.server.coRouter
 import java.util.*
 
-class PlaceOrder {
-    data class Command(val orderId: String)
-
+class GetOrderById {
     @Configuration
     class Endpoint {
         @Bean
-        fun placeOrderRoute(handler: Handler) = coRouter {
-            POST("/orders/{id}/place") {
+        fun getOrderByIdRoute(repository: OrdersRepository) = coRouter {
+            GET("/orders/{id}") {
                 val orderId = it.pathVariable("id")
-                handler.handle(Command(orderId))
+                val order = repository.findById(orderId)
 
                 ServerResponse
                     .ok()
-                    .bodyValue(object {})
+                    .bodyValue(order)
                     .awaitSingle()
             }
-        }
-    }
-
-    @Component
-    class Handler(
-        private val uow: UnitOfWork,
-        private val repository: OrdersRepository
-    ) : CommandHandler.WithoutResult<Command> {
-        override suspend fun handle(command: Command) {
-            val order = repository.findById(command.orderId)
-                .orElseGet { throw IllegalArgumentException("Order does not exist") }
-
-            order.place()
-
-            uow.commitTo<OrdersRepository>(order)
         }
     }
 }
