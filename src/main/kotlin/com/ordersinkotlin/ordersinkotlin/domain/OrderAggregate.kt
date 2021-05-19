@@ -34,13 +34,14 @@ class Order private constructor() : Entity() {
     var statusChangedAtUtc: LocalDateTime = LocalDateTime.now(ZoneOffset.UTC)
         private set
 
+
     lateinit var customer: Customer
         private set
 
     private var itemsCollection = mutableListOf<OrderItem>()
 
     @Version
-    private var version: Long = 0
+    private var version: String? = null
 
     var items
         get() = itemsCollection.toList()
