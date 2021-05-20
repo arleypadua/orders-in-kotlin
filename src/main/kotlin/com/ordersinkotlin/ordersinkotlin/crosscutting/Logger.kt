@@ -21,4 +21,12 @@ object LoggerMap {
  * @return A new or an existing logger
  */
 inline fun <reified T> logger() = LoggerMap.getOrCreate(T::class.java)
+
+/**
+ * Gets the logger for the current class where this method is called.
+ *
+ * The logs are store in a singleton, meaning that they're created only once per runtime
+ *
+ * @return A new or an existing logger
+ */
 inline fun Any.logger() = LoggerMap.getOrCreate(this::class.java)
