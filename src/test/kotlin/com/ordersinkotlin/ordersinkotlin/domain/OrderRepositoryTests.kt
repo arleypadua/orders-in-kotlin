@@ -1,6 +1,7 @@
 package com.ordersinkotlin.ordersinkotlin.domain
 
 import com.ordersinkotlin.ordersinkotlin.seedwork.*
+import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -35,7 +36,7 @@ class OrderRepositoryTests {
     }
 
     @Test
-    fun `given order placed, when saving, should be saved and side-effects should be handled`() {
+    fun `given order placed, when saving, should be saved and side-effects should be handled`() : Unit = runBlocking {
         val order = OrderFixture.getDraftOrder()
         order.add(
             OrderItem(
@@ -60,8 +61,7 @@ class OrderRepositoryTests {
     }
 
     @Test
-    fun `given order exists, when updating old version, error should be thrown`() {
-
+    fun `given order exists, when updating old version, error should be thrown`() : Unit = runBlocking {
         val order = OrderFixture.getPlacedOrder()
         uow.commitTo<OrdersRepository>(order)
 
