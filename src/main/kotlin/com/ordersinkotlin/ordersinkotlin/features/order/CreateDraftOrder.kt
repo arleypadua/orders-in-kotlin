@@ -1,11 +1,15 @@
 package com.ordersinkotlin.ordersinkotlin.features.order
 
+import com.ordersinkotlin.ordersinkotlin.crosscutting.logger
+import com.ordersinkotlin.ordersinkotlin.crosscutting.structuredInfo
 import com.ordersinkotlin.ordersinkotlin.domain.*
 import com.ordersinkotlin.ordersinkotlin.features.data.OrderProduct
 import com.ordersinkotlin.ordersinkotlin.seedwork.CommandHandler
 import com.ordersinkotlin.ordersinkotlin.seedwork.UnitOfWork
 import com.ordersinkotlin.ordersinkotlin.seedwork.commitTo
 import kotlinx.coroutines.reactive.awaitSingle
+import net.logstash.logback.argument.StructuredArguments
+import net.logstash.logback.argument.StructuredArguments.keyValue
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
@@ -20,11 +24,21 @@ class CreateDraftOrder {
 
     @Configuration
     class Endpoint {
+
+        private val logger = logger()
+
         @Bean
         fun createDraftOrderRoute(handler: Handler) = coRouter {
             POST("/orders/draft") {
                 val command = it.awaitBody<Command>()
                 val result = handler.handle(command)
+
+                logger.structuredInfo(
+                    "Created order {orderId} with {quantityOfProducts} products",
+                    result.id,
+                    command.products.size,
+                    keyValue("command", command)
+                )
 
                 ServerResponse
                     .ok()
