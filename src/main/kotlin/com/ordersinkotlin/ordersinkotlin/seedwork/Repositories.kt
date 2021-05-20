@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component
 import java.lang.IllegalArgumentException
 
 interface UnitOfWork {
-    fun <TEntity : Entity> commit(
+    suspend fun <TEntity : Entity> commit(
         repositoryType: Class<*>,
         entity: TEntity
     )
 }
 
-inline fun <reified TRepository : CrudRepository<*, *>> UnitOfWork.commitTo(
+suspend inline fun <reified TRepository : CrudRepository<*, *>> UnitOfWork.commitTo(
     entity: Entity
 ) {
     this.commit(
@@ -26,7 +26,7 @@ class SpringUnitOfWork(
     private val context: ApplicationContext,
     private val eventPublisher: EventPublisher
 ) : UnitOfWork {
-    override fun <TEntity : Entity> commit(
+    override suspend fun <TEntity : Entity> commit(
         crudRepositoryType: Class<*>,
         entity: TEntity
     ) {
