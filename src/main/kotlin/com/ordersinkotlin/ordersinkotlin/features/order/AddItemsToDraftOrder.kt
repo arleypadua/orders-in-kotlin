@@ -1,6 +1,6 @@
 package com.ordersinkotlin.ordersinkotlin.features.order
 
-import com.ordersinkotlin.ordersinkotlin.domain.OrdersRepository
+import com.ordersinkotlin.ordersinkotlin.domain.order.OrdersRepository
 import com.ordersinkotlin.ordersinkotlin.features.data.OrderProduct
 import com.ordersinkotlin.ordersinkotlin.features.data.asOrderItem
 import com.ordersinkotlin.ordersinkotlin.seedwork.CommandHandler

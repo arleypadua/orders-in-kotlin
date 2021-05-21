@@ -2,13 +2,12 @@ package com.ordersinkotlin.ordersinkotlin.features.order
 
 import com.ordersinkotlin.ordersinkotlin.crosscutting.logger
 import com.ordersinkotlin.ordersinkotlin.crosscutting.structuredInfo
-import com.ordersinkotlin.ordersinkotlin.domain.*
+import com.ordersinkotlin.ordersinkotlin.domain.order.*
 import com.ordersinkotlin.ordersinkotlin.features.data.OrderProduct
 import com.ordersinkotlin.ordersinkotlin.seedwork.CommandHandler
 import com.ordersinkotlin.ordersinkotlin.seedwork.UnitOfWork
 import com.ordersinkotlin.ordersinkotlin.seedwork.commitTo
 import kotlinx.coroutines.reactive.awaitSingle
-import net.logstash.logback.argument.StructuredArguments
 import net.logstash.logback.argument.StructuredArguments.keyValue
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

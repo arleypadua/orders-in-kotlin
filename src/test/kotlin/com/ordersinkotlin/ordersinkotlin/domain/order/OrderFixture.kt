@@ -1,4 +1,4 @@
-package com.ordersinkotlin.ordersinkotlin.domain
+package com.ordersinkotlin.ordersinkotlin.domain.order
 
 import java.util.*
 

@@ -1,15 +1,13 @@
 package com.ordersinkotlin.ordersinkotlin.features.order
 
-import com.ordersinkotlin.ordersinkotlin.crosscutting.logger
-import com.ordersinkotlin.ordersinkotlin.domain.Order
-import com.ordersinkotlin.ordersinkotlin.domain.OrderFixture
-import com.ordersinkotlin.ordersinkotlin.domain.OrderStatus
-import com.ordersinkotlin.ordersinkotlin.domain.OrdersRepository
+import com.ordersinkotlin.ordersinkotlin.domain.order.OrderFixture
+import com.ordersinkotlin.ordersinkotlin.domain.order.Order
+import com.ordersinkotlin.ordersinkotlin.domain.order.OrderStatus
+import com.ordersinkotlin.ordersinkotlin.domain.order.OrdersRepository
 import com.ordersinkotlin.ordersinkotlin.seedwork.CommandHandler
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 

@@ -1,4 +1,4 @@
-package com.ordersinkotlin.ordersinkotlin.domain
+package com.ordersinkotlin.ordersinkotlin.domain.order
 
 import com.ordersinkotlin.ordersinkotlin.seedwork.DomainEvent
 import com.ordersinkotlin.ordersinkotlin.seedwork.Entity

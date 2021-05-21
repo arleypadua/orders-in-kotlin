@@ -1,7 +1,7 @@
 package com.ordersinkotlin.ordersinkotlin.features.order
 
-import com.ordersinkotlin.ordersinkotlin.domain.OrderStatus
-import com.ordersinkotlin.ordersinkotlin.domain.OrdersRepository
+import com.ordersinkotlin.ordersinkotlin.domain.order.OrderStatus
+import com.ordersinkotlin.ordersinkotlin.domain.order.OrdersRepository
 import com.ordersinkotlin.ordersinkotlin.seedwork.CommandHandler
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
