@@ -35,7 +35,6 @@ class CreateProduct {
 
     @Component
     class Handler(
-        private val repository: ProductsRepository,
         private val uow: UnitOfWork
     ) : CommandHandler<Command, Result> {
         override suspend fun handle(command: Command): Result {
