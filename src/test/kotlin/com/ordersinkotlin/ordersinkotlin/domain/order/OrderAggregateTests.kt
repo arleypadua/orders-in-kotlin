@@ -6,11 +6,11 @@ import org.junit.jupiter.api.assertThrows
 class OrderAggregateTests {
     @Test
     fun `order in draft and items added, when applying discount, discount should be applied`() {
-        val order = OrderFixture.getDraftOrder(includeItem = true)
+        val order = OrderFixture.getDraftOrder(OrderFixture.getRandomOrderItem())
 
-        order.applyDiscount(50.0)
+        order.applyDiscount(5.0)
 
-        assert(order.discount == 50.0)
+        assert(order.discount == 5.0)
     }
 
     @Test
@@ -24,7 +24,7 @@ class OrderAggregateTests {
 
     @Test
     fun `order in draft, when applying discount higher then total, error should be thrown`() {
-        val order = OrderFixture.getDraftOrder(includeItem = true)
+        val order = OrderFixture.getDraftOrder(OrderFixture.getRandomOrderItem())
 
         assertThrows<IllegalArgumentException> {
             order.applyDiscount(200.0)
@@ -42,7 +42,7 @@ class OrderAggregateTests {
 
     @Test
     fun `order in draft, when placing, order should be placed`() {
-        val order = OrderFixture.getDraftOrder(includeItem = true)
+        val order = OrderFixture.getDraftOrder(OrderFixture.getRandomOrderItem())
         order.place()
 
         assert(order.status == OrderStatus.Placed)
@@ -54,7 +54,7 @@ class OrderAggregateTests {
 
     @Test
     fun `order in draft, when cancelling, order should be cancelled`() {
-        val order = OrderFixture.getDraftOrder(includeItem = true)
+        val order = OrderFixture.getDraftOrder(OrderFixture.getRandomOrderItem())
         order.cancel()
 
         assert(order.status == OrderStatus.Canceled)

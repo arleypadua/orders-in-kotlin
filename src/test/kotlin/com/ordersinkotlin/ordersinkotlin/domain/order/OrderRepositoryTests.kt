@@ -42,7 +42,7 @@ class OrderRepositoryTests {
         val order = OrderFixture.getDraftOrder()
         order.add(
             OrderItem(
-                Product(UUID.randomUUID()),
+                Product(UUID.randomUUID().toString()),
                 30.0,
                 1
             )

@@ -1,6 +1,7 @@
 package com.ordersinkotlin.ordersinkotlin.features.order
 
 import com.ordersinkotlin.ordersinkotlin.domain.order.OrdersRepository
+import com.ordersinkotlin.ordersinkotlin.domain.product.ProductsRepository
 import com.ordersinkotlin.ordersinkotlin.features.data.OrderProduct
 import com.ordersinkotlin.ordersinkotlin.features.data.asOrderItem
 import com.ordersinkotlin.ordersinkotlin.seedwork.CommandHandler
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.awaitBody
 import org.springframework.web.reactive.function.server.coRouter
-import kotlin.random.Random
 
 class AddItemsToDraftOrder {
     data class Command(val orderId: String, val products: List<OrderProduct>)
@@ -42,17 +42,26 @@ class AddItemsToDraftOrder {
     @Component
     class Handler(
         private val uow: UnitOfWork,
-        private val repository: OrdersRepository
+        private val repository: OrdersRepository,
+        private val productsRepository: ProductsRepository
     ) : CommandHandler.WithoutResult<Command> {
-        private val random = Random(0)
-
         override suspend fun handle(command: Command) {
             val order = repository.findById(command.orderId)
                 .orElseGet { throw IllegalArgumentException("Order does not exist") }
 
+            val products = productsRepository
+                .findAllById(command.products.map { it.productId })
+                .map { it.id to it }
+                .toMap()
+
             order.add(command.products
-                // todo get current price from product
-                .map { it.asOrderItem(random.nextDouble(1.0, 250.0)) }
+                .map {
+                    val existingProduct = products.getOrElse(it.productId) {
+                        throw IllegalArgumentException("Product ${it.productId} does not exist")
+                    }
+
+                    it.asOrderItem(existingProduct.price)
+                }
             )
 
             uow.commitTo<OrdersRepository>(order)

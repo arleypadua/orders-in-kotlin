@@ -3,6 +3,7 @@ package com.ordersinkotlin.ordersinkotlin.features.order
 import com.ordersinkotlin.ordersinkotlin.crosscutting.logger
 import com.ordersinkotlin.ordersinkotlin.crosscutting.structuredInfo
 import com.ordersinkotlin.ordersinkotlin.domain.order.*
+import com.ordersinkotlin.ordersinkotlin.domain.product.ProductsRepository
 import com.ordersinkotlin.ordersinkotlin.features.data.OrderProduct
 import com.ordersinkotlin.ordersinkotlin.seedwork.CommandHandler
 import com.ordersinkotlin.ordersinkotlin.seedwork.UnitOfWork
@@ -18,7 +19,7 @@ import org.springframework.web.reactive.function.server.coRouter
 import java.util.*
 
 class CreateDraftOrder {
-    data class Command(val customerId: UUID, val products: List<OrderProduct>)
+    data class Command(val customerId: String, val products: List<OrderProduct>)
     data class Result(val id: String)
 
     @Configuration
@@ -49,18 +50,30 @@ class CreateDraftOrder {
 
     @Component
     class Handler(
-        private val uow: UnitOfWork
+        private val uow: UnitOfWork,
+        private val productsRepository: ProductsRepository
     ) : CommandHandler<Command, Result> {
         override suspend fun handle(command: Command): Result {
             val order = Order.draft(
                 Customer(command.customerId) // todo validate whether customer exists
             )
 
-            order.add(
-                command.products
-                    .map {
-                        OrderItem(Product(it.productId), 50.0, it.quantity)
-                    }) // todo get current product prices
+            if(command.products.any()) {
+                val products = productsRepository
+                    .findAllById(command.products.map { it.productId })
+                    .map { it.id to it }
+                    .toMap()
+
+                order.add(
+                    command.products
+                        .map {
+                            val existingProduct = products.getOrElse(it.productId) {
+                                throw IllegalArgumentException("Product ${it.productId} does not exist")
+                            }
+
+                            OrderItem(Product(it.productId), existingProduct.price, it.quantity)
+                        })
+            }
 
             uow.commitTo<OrdersRepository>(order)
 

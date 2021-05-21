@@ -22,7 +22,7 @@ class CreateDraftOrderTests {
     @Test
     fun `given valid input, when creating draft order, should be created`() {
         val result = runBlocking {
-            handler.handle(CreateDraftOrder.Command(UUID.randomUUID(), listOf()))
+            handler.handle(CreateDraftOrder.Command(UUID.randomUUID().toString(), listOf()))
         }
 
         val created = repository.findById(result.id)

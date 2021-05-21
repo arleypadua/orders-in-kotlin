@@ -37,7 +37,7 @@ class PlaceOrder {
     ) : CommandHandler.WithoutResult<Command> {
         override suspend fun handle(command: Command) {
             val order = repository.findById(command.orderId)
-                .orElseGet { throw IllegalArgumentException("Order does not exist") }
+                .orElseThrow { IllegalArgumentException("Order does not exist") }
 
             order.place()
 

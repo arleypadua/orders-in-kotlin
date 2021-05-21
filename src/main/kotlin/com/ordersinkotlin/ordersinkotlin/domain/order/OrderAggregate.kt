@@ -168,8 +168,8 @@ enum class OrderStatus {
     abstract fun isCancellable(): Boolean
 }
 
-data class Product(val id: UUID)
-data class Customer(val id: UUID)
+data class Product(val id: String)
+data class Customer(val id: String)
 
 sealed class OrderStatusChangedEvent(val orderId: String, val changedAtUtc: LocalDateTime) : DomainEvent
 class OrderPlacedEvent(orderId: String, changedAtUtc: LocalDateTime) : OrderStatusChangedEvent(orderId, changedAtUtc)
