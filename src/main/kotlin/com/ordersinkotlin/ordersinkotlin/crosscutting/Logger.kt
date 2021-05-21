@@ -1,10 +1,9 @@
 package com.ordersinkotlin.ordersinkotlin.crosscutting
 
-import net.logstash.logback.argument.StructuredArgument
+import net.logstash.logback.argument.StructuredArguments.value
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.concurrent.ConcurrentHashMap
-import net.logstash.logback.argument.StructuredArguments.value
 
 object LoggerMap {
     private val loggers: ConcurrentHashMap<Class<*>, Logger> = ConcurrentHashMap<Class<*>, Logger>()
@@ -20,14 +19,16 @@ object LoggerFormat {
 
     private const val LOG_VARIABLE_PLACEHOLDER = "{}"
 
-    fun getTemplateFor(format: String): LogTemplate = internedLogMap.getOrPut(format) {
-        createLogTemplate(format)
-    }
-
-    private fun createLogTemplate(format: String): LogTemplate {
+    fun getTemplateFor(format: String): LogTemplate {
         if (!paramsRegex.containsMatchIn(format))
             return LogTemplate(format, listOf())
 
+        return internedLogMap.getOrPut(format) {
+            createLogTemplate(format)
+        }
+    }
+
+    private fun createLogTemplate(format: String): LogTemplate {
         val matches = paramsRegex
             .findAll(format)
             .map {
@@ -51,7 +52,7 @@ data class LogTemplate(val format: String, val variables: List<String>) {
         arguments.forEachIndexed { index, arg ->
             val variableName = variables.elementAtOrNull(index)
 
-            if(variableName != null)
+            if (variableName != null)
                 outputArguments.add(value(variableName, arg))
             else
                 outputArguments.add(arg)
