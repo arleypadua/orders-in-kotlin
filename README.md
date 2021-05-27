@@ -40,7 +40,7 @@ You should see a response similar to this:
 
 This application is configured to use structured logs with the following setup:
 
-- SFL4J, as an abstraction layer for logging
+- SLF4J, as an abstraction layer for logging
 - Logback, as a logging framework
 - Elastic stack, for log ingestion and logging frontend
 
